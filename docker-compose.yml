@@ -15,7 +15,7 @@ services:
 
     # Synchronize backend local folder into container
     volumes:
-      - ./backend:/var/www
+      - ./backend:/var/www:delegated # Use delegated for better performance
 
     depends_on:
       - db
@@ -34,9 +34,9 @@ services:
     ports:
       - '8000:80'
 
-    # Give nginx access to project files
+    # Give nginx access to project files Prefer container
     volumes:
-      - ./backend:/var/www
+      - ./backend:/var/www:delegated # Use delegated for better performance
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
 
     depends_on:

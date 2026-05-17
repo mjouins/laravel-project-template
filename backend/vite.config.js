@@ -28,7 +28,8 @@ export default defineConfig({
         },
 
         watch: {
-            ignored: ["**/storage/framework/views/**"],
+            usePolling: true,
+            ignored: ["**/vendor/**", "**/node_modules/**", "**/storage/**"],
         },
     },
 });
