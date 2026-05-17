@@ -28,5 +28,16 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Set working directory
 WORKDIR /var/www
 
+# Copy composer files and install dependencies
+COPY composer.json composer.lock ./
+RUN composer install
+
+# Copy package files and install Node.js dependencies
+COPY package.json package-lock.json ./
+RUN npm install
+
+# Copy the rest of the application code
+COPY . .
+
 # Start PHP-FPM
 CMD ["php-fpm"]
