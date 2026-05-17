@@ -19,6 +19,7 @@ services:
 
     command: sh -c "
                 composer install &&
+                chmod -R 777 storage bootstrap/cache && 
                 php artisan key:generate --force || true &&
                 php artisan migrate &&
                 php-fpm
