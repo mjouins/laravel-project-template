@@ -10,7 +10,7 @@ server {
     server_name localhost;
 
     # Only /public should be exposed to the web
-    root /var/www/public;
+    root ${APP_ROOT}/public;
 
     # Handle normal requests
     location / {
@@ -31,7 +31,7 @@ server {
         # Standard FastCGI parameters
         include fastcgi_params;
 
-        # Full path to executed PHP file (/var/www/public/index.php) 
+        # Full path to executed PHP file (${APP_ROOT}/public/index.php) 
         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
     }
 

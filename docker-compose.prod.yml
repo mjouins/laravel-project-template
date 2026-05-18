@@ -29,7 +29,12 @@ services:
   nginx:
     container_name: laravel_nginx
 
-    image: nginx:alpine
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+
+    environment:
+      APP_ROOT: /var/www
 
     # Publish container port 80 to localhost:8000
     ports:
@@ -38,7 +43,7 @@ services:
     # Give nginx access to project files Prefer container
     volumes:
       - public_data:/var/www/public
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./nginx/default.conf.template:/etc/nginx/templates/default.conf.template
 
     depends_on:
       - app

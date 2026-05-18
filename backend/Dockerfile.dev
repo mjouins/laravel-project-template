@@ -8,6 +8,7 @@ RUN apt-get update && apt-get install -y \
     zip \
     nodejs \
     npm \
+    netcat-openbsd \
     libpng-dev \
     libonig-dev \
     libxml2-dev
@@ -25,9 +26,6 @@ RUN docker-php-ext-install \
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Set working directory
-WORKDIR /var/www
-
 # Copy entire Laravel application
 COPY . .
 
@@ -36,6 +34,12 @@ RUN composer install
 
 # Install Node.js dependencies
 RUN npm install
+
+# Copy the development entrypoint script
+COPY entrypoint.sh /entrypoint.sh
+
+# Make the entrypoint script executable
+RUN chmod +x /entrypoint.sh
 
 # Start PHP-FPM
 CMD ["php-fpm"]

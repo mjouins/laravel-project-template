@@ -7,25 +7,19 @@ services:
       dockerfile: Dockerfile.dev
 
     # Laravel project will live here
-    working_dir: /var/www
+    working_dir: /workspace/backend
 
     # Synchronize backend local folder into container
     volumes:
-      - ./backend:/var/www
-      - ./:/workspace # Sync entire project for VSCode access, to work with devcontainer
-      - ./backend/.env.dev:/var/www/.env
-      - vendor_data:/var/www/vendor
+      - ./:/workspace
+      - ./backend/.env.dev:/workspace/backend/.env
+      - vendor_data:/workspace/backend/vendor
 
     depends_on:
       - db
 
-    command: sh -c "
-      composer install &&
-      chmod -R 777 storage bootstrap/cache &&
-      php artisan key:generate --force || true &&
-      php artisan migrate &&
-      php-fpm
-      "
+    command: /entrypoint.sh
+
     networks:
       - laravel
 
@@ -38,13 +32,12 @@ services:
       context: ./backend
       dockerfile: Dockerfile.dev
 
-    working_dir: /var/www
+    working_dir: /workspace/backend
 
     volumes:
-      - ./backend:/var/www
-      - ./:/workspace # Sync entire project for VSCode access, to work with devcontainer
-      - ./backend/.env.dev:/var/www/.env
-      - node_modules_data:/var/www/node_modules
+      - ./:/workspace
+      - ./backend/.env.dev:/workspace/backend/.env
+      - node_modules_data:/workspace/backend/node_modules
 
     # Publish container port 5173  for Vite dev server
     ports:
@@ -61,7 +54,12 @@ services:
   nginx:
     container_name: laravel_nginx
 
-    image: nginx:alpine
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+
+    environment:
+      APP_ROOT: /workspace/backend
 
     # Publish container port 80 to localhost:8000
     ports:
@@ -69,10 +67,8 @@ services:
 
     # Give nginx access to project files Prefer container
     volumes:
-      - ./backend:/var/www
-      - ./:/workspace # Sync entire project for VSCode access, to work with devcontainer
-      - ./backend/.env.dev:/var/www/.env
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./:/workspace
+      - ./nginx/default.conf.template:/etc/nginx/templates/default.conf.template
 
     depends_on:
       - app
