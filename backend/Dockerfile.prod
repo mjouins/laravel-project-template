@@ -60,5 +60,11 @@ RUN mkdir -p \
 RUN chown -R www-data:www-data storage bootstrap/cache && \
     chmod -R 775 storage bootstrap/cache
 
+# Copy the production entrypoint script
+COPY entrypoint.sh /entrypoint.sh
+
+# Make the entrypoint script executable
+RUN chmod +x /entrypoint.sh
+
 # Start PHP-FPM
 CMD ["php-fpm"]

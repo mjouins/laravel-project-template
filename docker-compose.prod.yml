@@ -19,30 +19,7 @@ services:
     depends_on:
       - db
 
-    command: sh -c "
-      until php -r '
-      try {
-      new PDO(
-      \"mysql:host=db;port=3306;dbname=laravel\",
-      \"laravel\",
-      \"root\"
-      );
-      echo \"Database ready\n\";
-      exit(0);
-      } catch (Exception $$e) {
-      exit(1);
-      }
-      '; do
-      echo 'Waiting for database...';
-      sleep 2;
-      done &&
-      php artisan migrate --force &&
-      php artisan config:clear &&
-      php artisan cache:clear &&
-      php artisan config:cache &&
-      php artisan route:cache &&
-      php-fpm
-      "
+    command: /entrypoint.sh
 
     networks:
       - laravel
