@@ -23,7 +23,7 @@ server {
     location ~ \.php$ {
 
         # Forward PHP requests to PHP-FPM container
-        fastcgi_pass app:9000;
+        fastcgi_pass laravel_app:9000; # app doesn't work in podman
 
         # Default PHP file
         fastcgi_index index.php;
