@@ -1,7 +1,5 @@
 services:
   app:
-    container_name: laravel_app
-
     build:
       context: ./backend
       dockerfile: Dockerfile.dev
@@ -25,8 +23,6 @@ services:
     restart: unless-stopped
 
   vite:
-    container_name: laravel_vite
-
     build:
       context: ./backend
       dockerfile: Dockerfile.dev
@@ -50,8 +46,6 @@ services:
       - laravel
 
   nginx:
-    container_name: laravel_nginx
-
     build:
       context: ./nginx
       dockerfile: Dockerfile
@@ -77,8 +71,6 @@ services:
     restart: unless-stopped
 
   db:
-    container_name: laravel_db
-
     image: docker.io/library/mysql:8.0
 
     # Load MySQL credentials from .env.dev file
