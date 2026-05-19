@@ -39,7 +39,7 @@ services:
 
     # Publish container port 5173  for Vite dev server
     ports:
-      - "5173:5173"
+      - '5173:5173'
 
     command: sh -c "npm install && npm run dev -- --host"
 
@@ -61,7 +61,7 @@ services:
 
     # Publish container port 80 to localhost:8000
     ports:
-      - "8000:80"
+      - '8000:80'
 
     # Give nginx access to project files Prefer container
     volumes:
@@ -79,7 +79,7 @@ services:
   db:
     container_name: laravel_db
 
-    image: mysql:8.0
+    image: docker.io/library/mysql:8.0
 
     # Load MySQL credentials from .env.dev file
     env_file:
@@ -90,7 +90,7 @@ services:
 
     # Expose MySQL for DBeaver debugging
     ports:
-      - "3306:3306"
+      - '3306:3306'
 
     volumes:
       - dbdata:/var/lib/mysql
