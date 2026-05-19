@@ -38,7 +38,7 @@ services:
 
     # Publish container port 80 to localhost:8000
     ports:
-      - '8000:80'
+      - "8000:80"
 
     # Give nginx access to project files Prefer container
     volumes:
