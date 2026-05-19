@@ -36,9 +36,9 @@ services:
     environment:
       APP_ROOT: /var/www
 
-    # Publish container port 80 to localhost:8000 on the server
+    # Publish container port 80 to localhost:8040 on the server
     ports:
-      - '127.0.0.1:8000:80'
+      - '127.0.0.1:8040:80'
 
     # Give nginx access to project files Prefer container
     volumes:
