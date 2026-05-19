@@ -9,3 +9,5 @@ git pull origin main
 echo "Starting containers..."
 docker compose -f docker-compose.prod.yml up -d --build
 
+echo "Reloading Nginx reverse proxy..."
+sudo nginx -t && sudo nginx -s reload
