@@ -24,22 +24,20 @@ services:
 
     restart: unless-stopped
 
-  nginx:
+  apache:
     build:
-      context: ./nginx
+      context: ./apache
       dockerfile: Dockerfile
 
     environment:
       APP_ROOT: /var/www
 
-    # Publish container port 80 to localhost:8040 on the server
     ports:
       - '127.0.0.1:8040:80'
 
-    # Give nginx access to project files Prefer container
     volumes:
       - public_data:/var/www/public
-      - ./nginx/default.conf.template:/etc/nginx/templates/default.conf.template
+      - ./apache/000-default.conf:/etc/apache2/sites-available/000-default.conf
 
     depends_on:
       - app
